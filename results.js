@@ -141,7 +141,7 @@ async function loadModel(results_part,noise){
 
     var input_data=generateData(n_samples,noise);
     const tensorData = convertToTensor(input_data);
-    const model = await tf.loadLayersModel('/files/'+model_name);
+    const model = await tf.loadLayersModel('./files/'+model_name);
     var testing_graph=document.querySelector("."+results_part).querySelector("#testing_graph");
     testModel(model,input_data, tensorData,testing_graph);
 
