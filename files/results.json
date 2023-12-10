@@ -1,0 +1,67 @@
+{"under_fit_noisy":{
+    "n_samples":200,
+    "batchSize":20,
+    "epochs":30,
+    "hidden_layers":[{
+        "neurons":10,
+        "activation":"relu"
+    }],
+    "file":"model_under_fitting_noisy.json"
+},
+"under_fit":{
+    "n_samples":200,
+    "batchSize":20,
+    "epochs":30,
+    "hidden_layers":[{
+        "neurons":10,
+        "activation":"relu"
+    }],
+    "file":"model_under_fitting.json"
+},
+"best_fit":{
+    "n_samples":1000,
+    "batchSize":50,
+    "epochs":100,
+    "hidden_layers":[{
+        "neurons":16,
+        "activation":"relu"
+    },
+    {
+        "neurons":25,
+        "activation":"sigmoid"
+    },
+    {
+        "neurons":10,
+        "activation":"relu"
+    },
+    {
+        "neurons":10,
+        "activation":"relu"
+    }
+],
+    "file":"model_best_fitting.json"
+},
+"best_fit_noisy":{
+    "n_samples":500,
+    "batchSize":20,
+    "epochs":100,
+    "hidden_layers":[{
+        "neurons":40,
+        "activation":"relu"
+    },
+    {
+        "neurons":25,
+        "activation":"sigmoid"
+    },
+    {
+        "neurons":10,
+        "activation":"sigmoid"
+    },
+    {
+        "neurons":20,
+        "activation":"relu"
+    }
+],
+    "file":"model_best_fitting_noisy.json"
+}
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dokumentation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <!-- Import TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <!-- Import tfjs-vis -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+    <style>
+      .modal-header,.modal-footer{
+          padding: 5px 15px;
+      }
+      .form-label{
+        margin-bottom: 2px;
+      }
+      .hidden_layer_item{
+        padding: 5px;
+        width: 100%;
+      }
+      .icn-spinner {
+        animation: spin-animation 1s infinite;
+        display: inline-block;
+      }
+
+      @keyframes spin-animation {
+        0% {
+          transform: rotate(0deg);
+          animation-timing-function: linear;
+
+        }
+        100% {
+          transform: rotate(359deg);
+        }
+      }
+      #input_graph,#training_graph,#testing_graph{
+        height: 250px;
+        width: 100%;
+      }
+      .subsurface-title {
+        display: none;
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Tenth navbar example">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    
+          <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+            <ul class="navbar-nav">
+              <li class="nav-item btn">
+                <a class="nav-link" aria-current="page" href="index.html">Training und testen</a>
+              </li>
+              <li class="nav-item btn">
+                <a class="nav-link" href="datagenerating.html">Datenbeispiele</a>
+              </li>
+              <li class="nav-item dropdown btn">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Resultate
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="results.html">Ohne Noise</a>
+                  <a class="dropdown-item" href="results_noisy.html">Mit Noise</a>
+                </div>
+              </li>
+              
+              <li class="nav-item btn active">
+                <a class="nav-link" href="documentation.html">Dokumentation</a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="container">
+      <br>
+      <h3>#Interaktionen</h3>
+      <ul>
+        <li>Training und Tests: Auf dieser Seite können Sie Daten mit oder ohne Rauschen generieren, indem Sie die Stichprobengröße angeben. Anschließend können Sie das Modell erstellen und verborgene Schichten definieren. Wenn Sie auf "Modell generieren und trainieren" klicken, wird das Modell anhand der von Ihnen generierten Daten erstellt und trainiert , dann wird eine Prüfung durchgeführt und angezeigt. Sie können das Modell auch speichern (dadurch werden zwei Dateien heruntergeladen, die erste enthält die Modellstruktur und die zweite die Gewichte).</li>
+        <li>Datenbeispiele: Auf dieser Seite können Sie sehen, wie Daten generiert werden. Sie können die Anzahl der Proben auswählen, die Sie generieren möchten. Es werden zwei Datensätze generiert, einer ohne Rauschen und der zweite mit Rauschen.</li>
+        <li>Resultate: Auf dieser Registerkarte gibt es zwei Abschnitte, einen für Daten ohne Rauschen und den anderen für die Ergebnisse von Daten mit Rauschen.Für jeden Abschnitt können Sie die Ergebnisse sehen und das vorab trainierte Modell mit allen Details laden. Außerdem wird ein automatischer Test durchgeführt und angezeigt</li>
+
+    </ul>
+
+      <h3>#Entwicklung</h3>
+      <div class="card" style="width: 100%;">
+        <div class="card-body">
+          <h4 class="card-title">TensorFlow.js</h4>
+          <p class="card-text">
+            TensorFlow.js <a href="https://www.tensorflow.org/js/guide" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+              </svg></a> ist eine Open-Source-Bibliothek, die es Entwicklern ermöglicht, Maschinenlernmodelle direkt im Browser oder auf Node.js zu definieren, zu trainieren und auszuführen. Es handelt sich um eine Erweiterung des TensorFlow-Frameworks, das entwickelt wurde, um die Möglichkeiten des Maschinenlernens für JavaScript-Entwickler zugänglich zu machen. TensorFlow.js ermöglicht die Erstellung von Maschinenlernmodellen für verschiedene Aufgaben, einschließlich Bild- und Spracherkennung, natürlicher Sprachverarbeitung und mehr.            <br>
+          </p>
+        </div>
+      </div>
+      <br>
+      <div class="card" style="width: 100%;">
+        <div class="card-body">
+          <h4 class="card-title">TensorFlow.js Visualization</h4>
+          <p class="card-text">
+            tfjs-vis
+            <a href="https://js.tensorflow.org/api_vis/1.5.1/" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+              </svg></a>
+             (TensorFlow.js Visualization) ist eine Bibliothek, die Visualisierungstools und -dienstprogramme für TensorFlow.js bereitstellt. Sie wurde entwickelt, um es Entwicklern zu erleichtern, das Verhalten von mit TensorFlow.js erstellten maschinellen Lernmodellen zu visualisieren und zu verstehen. 
+            
+            <br>
+          </p>
+        </div>
+      </div>
+      <br>
+      <div class="card" style="width: 100%;">
+        <div class="card-body">
+          <h4 class="card-title">Bootstrap </h4>
+          <p class="card-text">
+            Bootstrap 
+            <a href="https://getbootstrap.com/docs/4.6/getting-started/introduction/" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+              </svg></a>
+              ist ein weit verbreitetes Open-Source-Front-End-Framework zur Entwicklung von ansprechenden und mobilen Webanwendungen. Von Twitter entwickelt, bietet Bootstrap eine Sammlung vordefinierter HTML-, CSS- und JavaScript-Komponenten, die Entwicklern dabei helfen, konsistente und visuell ansprechende Benutzeroberflächen zu erstellen.            
+            <br>
+          </p>
+        </div>
+      </div>
+      <br>
+
+        
+  </div>
+  
+ 
+
+
+
+ 
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+<script src="training.js"></script>
+</body>
+</html>

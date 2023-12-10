@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+
+  <title>Datenbeispiele</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Tenth navbar example">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+        <ul class="navbar-nav">
+          <li class="nav-item btn">
+            <a class="nav-link" aria-current="page" href="index.html">Training und testen</a>
+          </li>
+          <li class="nav-item btn active">
+            <a class="nav-link" href="datagenerating.html">Datenbeispiele</a>
+          </li>
+          <li class="nav-item dropdown btn">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                Resultate
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="results.html">Ohne Noise</a>
+              <a class="dropdown-item" href="results_noisy.html">Mit Noise</a>
+            </div>
+          </li>
+          
+          <li class="nav-item btn ">
+            <a class="nav-link" href="documentation.html">Dokumentation</a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+</nav>
+<div class="container">
+
+  <br>
+  <div class="row justify-content-center text-center">
+    <div class="col-sm-4">
+      <div class="row justify-content-center">
+        <h4 class="text-center">Wählen Sie die Anzahl der Datenproben aus</h4>
+      </div>
+      <select id="number_of_samples" class="form-control form-select-md mb-3" aria-label=".form-select example">
+        <option selected value="0">Anzahl der Datenproben</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+
+      </select>
+      
+    </div>
+  </div>
+  <div class="row justify-content-center text-center" >
+    <div class="col-sm-8" id="graph">
+
+    </div>
+
+  </div>
+ 
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+<script>
+
+const graph_ele = document.getElementById('graph');
+
+  function gaussianRandom(mean=0, stdev=0.1) {
+      const u = 1 - Math.random(); // Converting [0,1) to (0,1]
+      const v = Math.random();
+      const z = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+      // Transform to the desired mean and standard deviation:
+      return z * stdev + mean;
+  }
+  function calculateYValue(x){
+    return (x+0.8)*(x-0.2)*(x-0.3)*(x-0.6);
+  }
+
+  function generateRandomXValues(N) {
+    const xValues = tf.linspace(-1, 1, N).dataSync();
+    return Array.from(xValues);
+  }
+  
+
+  $('#number_of_samples').on('change', function() {
+  var n_samples=this.value;
+  if (n_samples!=0){
+    var xValues = generateRandomXValues(n_samples);
+    var yValues=xValues.map(calculateYValue);
+    const xy_values = [];
+    const xy_values_noisy = [];
+
+    for (let i = 0; i < n_samples; i++) {
+      xy_values.push({ x: xValues[i], y: yValues[i] });
+      xy_values_noisy.push({ x: xValues[i], y: yValues[i]+gaussianRandom() });
+
+    }
+
+    tfvis.render.scatterplot(
+      graph_ele,
+        {values: [xy_values, xy_values_noisy], series: ['Without noise', 'Noisy']},
+        {xLabel: 'X'},
+        { yLabel: 'Y'},
+        {height: 300}
+      
+    );
+  }
+});
+</script>
+
+</body>
+</html>
