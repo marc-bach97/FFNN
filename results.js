@@ -110,7 +110,7 @@ function convertToTensor(data) {
 
 async function loadModel(results_part,noise){
   
-    $.getJSON( "/files/results.json", async function(data) {
+    $.getJSON( "./files/results.json", async function(data) {
       var model_data=data[results_part];
       var n_samples=model_data['n_samples'];
       var batchSize=model_data['batchSize'];
